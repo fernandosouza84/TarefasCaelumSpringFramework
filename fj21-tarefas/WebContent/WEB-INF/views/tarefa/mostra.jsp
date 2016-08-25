@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="caelum"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Mostra Tarefa</title>
+	<link href="resources/css/jquery.css" rel="stylesheet">
+	<script src="resources/js/jquery.js"></script>
+	<script src="resources/js/jquery-ui.js"></script>
 </head>
 <body>
 	<h3>Altera tarefa - ${tarefa.id}</h3>
@@ -25,10 +30,7 @@
 		
 		Data de Finalização: <br />
 		
-		<input type="text" name="dataFinalizacao" value="<fmt:formatDate 
-															value="${tarefa.dataFinalizacao.time}" 
-															pattern="dd/MM/yyyy" />
-		"/>
+		<caelum:campoData id="dataFinalizacao" value="${tarefa.dataFinalizacao.time}"/>
 		<br />
 		
 		<input type="submit" value="Alterar" />
