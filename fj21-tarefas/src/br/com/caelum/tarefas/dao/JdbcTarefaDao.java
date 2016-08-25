@@ -23,13 +23,14 @@ public class JdbcTarefaDao {
 	}
 
 	public void adiciona(Tarefa tarefa) {
-		String sql = "insert into tarefas (descricao, finalizado) values (?,?)";
+		String sql = "insert into tarefas (descricao, finalizado,dataFinalizacao) values (?,?,?)";
 		PreparedStatement stmt;
 		try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, tarefa.getDescricao());
 			stmt.setBoolean(2, tarefa.isFinalizado());
-			stmt.execute();
+			stmt.setDate(3, new Date(tarefa.getDataFinalizacao().getTimeInMillis()));
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

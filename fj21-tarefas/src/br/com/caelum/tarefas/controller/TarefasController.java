@@ -19,7 +19,7 @@ public class TarefasController {
 	public String form(){
 		return "tarefa/formulario";
 	}
-	
+
 	@RequestMapping("adicionaTarefa")
 	public String adiciona(@Valid Tarefa tarefa, BindingResult result){
 		
@@ -29,7 +29,6 @@ public class TarefasController {
 		
 		JdbcTarefaDao dao = new JdbcTarefaDao();
 		dao.adiciona(tarefa);
-		//return "tarefa/adicionada";
 		return "redirect:listaTarefas";
 	}
 	
@@ -38,8 +37,6 @@ public class TarefasController {
 		JdbcTarefaDao dao = new JdbcTarefaDao();
 		ModelAndView mav = new ModelAndView("tarefa/lista");
 		mav.addObject("tarefas", dao.lista());
-		//model.addAttribute("tarefas", dao.lista());
-		//return "tarefa/lista";
 		return mav;
 	}
 	
@@ -59,8 +56,13 @@ public class TarefasController {
 	}
 	
 	@RequestMapping("alteraTarefa")
-	public String altera(Tarefa tarefa){
+	public String altera(@Valid Tarefa tarefa){
 		JdbcTarefaDao dao = new JdbcTarefaDao();
+		
+		if(!tarefa.isFinalizado()){
+			tarefa.setDataFinalizacao(null);
+		}
+		
 		dao.altera(tarefa);
 		return "redirect:listaTarefas";
 	}
