@@ -4,11 +4,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Adicionada com sucesso</title>
+	<title>Menu</title>
 	<link type="text/css" href="resources/css/tarefas.css" rel="stylesheet">
 </head>
-	<body>
-		Nova tarefa adicionada com sucesso!<br />
-		<a href="listaTarefas">Volta para lista</a>
-	</body>
+<body>
+	<h2>Página Inicial da Lista de Tarefas</h2>
+	<p>Bem vindo, ${usuarioLogado.login}</p>
+	<a href="listaTarefas">Clique aqui</a> para acessar a lista de tarefas
+	<a href="logout">Sair do Sistema</a>
+</body>
 </html>

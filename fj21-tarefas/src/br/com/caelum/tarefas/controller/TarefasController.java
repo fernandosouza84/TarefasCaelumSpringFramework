@@ -2,6 +2,7 @@ package br.com.caelum.tarefas.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,13 @@ import br.com.caelum.tarefas.modelo.Tarefa;
 @Controller
 public class TarefasController {
 	
+	private final JdbcTarefaDao dao;
+	
+	@Autowired
+	public TarefasController(JdbcTarefaDao dao) {
+		this.dao = dao;
+	}
+	
 	@RequestMapping("novaTarefa")
 	public String form(){
 		return "tarefa/formulario";
@@ -27,51 +35,45 @@ public class TarefasController {
 			return "tarefa/formulario";
 		}
 		
-		JdbcTarefaDao dao = new JdbcTarefaDao();
-		dao.adiciona(tarefa);
+		this.dao.adiciona(tarefa);
 		return "redirect:listaTarefas";
 	}
 	
 	@RequestMapping("listaTarefas")
 	public ModelAndView lista(){
-		JdbcTarefaDao dao = new JdbcTarefaDao();
 		ModelAndView mav = new ModelAndView("tarefa/lista");
-		mav.addObject("tarefas", dao.lista());
+		mav.addObject("tarefas", this.dao.lista());
 		return mav;
 	}
 	
 	@ResponseBody
 	@RequestMapping("removeTarefa")
 	public void remove(Tarefa tarefa){
-		JdbcTarefaDao dao = new JdbcTarefaDao();
-		dao.remove(tarefa);
+		this.dao.remove(tarefa);
 		System.out.println("Tarefa removida -> " + tarefa.getId());
 	}
 	
 	@RequestMapping("mostraTarefa")
 	public String mostra(Long id, Model model){
-		JdbcTarefaDao dao = new JdbcTarefaDao();
-		model.addAttribute("tarefa", dao.buscaPorId(id));
+		model.addAttribute("tarefa", this.dao.buscaPorId(id));
 		return "tarefa/mostra";
 	}
 	
 	@RequestMapping("alteraTarefa")
 	public String altera(@Valid Tarefa tarefa){
-		JdbcTarefaDao dao = new JdbcTarefaDao();
-		
+
 		if(!tarefa.isFinalizado()){
 			tarefa.setDataFinalizacao(null);
 		}
 		
-		dao.altera(tarefa);
+		this.dao.altera(tarefa);
 		return "redirect:listaTarefas";
 	}
 
 	@RequestMapping("finalizaTarefa")
 	public String finaliza(Long id, Model model){
-		JdbcTarefaDao dao = new  JdbcTarefaDao();
-		dao.finaliza(id);
-		model.addAttribute("tarefa",dao.buscaPorId(id));
+		this.dao.finaliza(id);
+		model.addAttribute("tarefa",this.dao.buscaPorId(id));
 		System.out.println("Tarefa finalizada -> " + id);
 		return "tarefa/finalizada";
 	}

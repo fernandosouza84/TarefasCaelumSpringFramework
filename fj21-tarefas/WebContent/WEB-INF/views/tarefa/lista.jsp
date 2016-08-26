@@ -8,6 +8,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Lista de Tarefas</title>
+	<link type="text/css" href="resources/css/tarefas.css" rel="stylesheet">
 	<script type="text/javascript" src="resources/js/jquery.js"></script>
 	<script type="text/javascript">
 		function finalizarAgora(id) {
@@ -24,6 +25,7 @@
 </head>
 <body>
 	<a href="adicionaTarefa">Criar nova tarefa</a>
+	<a href="menu">Volta Menu</a>
 	
 	<br /><br />
 	
